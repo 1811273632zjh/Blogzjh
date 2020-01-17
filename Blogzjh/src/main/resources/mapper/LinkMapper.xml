@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zjh.blog.dao.LinkMapper" >
+
+    <resultMap id="BaseResultMap" type="com.zjh.blog.domain.Link" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="link_name" property="linkName" jdbcType="VARCHAR" />
+        <result column="link_url" property="linkUrl" jdbcType="VARCHAR" />
+        <result column="order_num" property="orderNum" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, link_name, link_url, order_num
+    </sql>
+
+
+    <!-- 获取所有链接并排序 -->
+    <select id="getTotalData" resultType="com.zjh.blog.domain.Link">
+        select
+        <include refid="Base_Column_List"/>
+        from t_link
+        order by order_num
+    </select>
+
+    <!-- 得到所有链接并分页排序 -->
+    <select id="listByPage" resultType="com.zjh.blog.domain.Link">
+        select 
+        <include refid="Base_Column_List" />
+        from t_link
+        order by order_num
+        limit #{start},#{end}
+    </select>
+
+    <!-- 获取链接总数 -->
+    <select id="getTotalCount" resultType="java.lang.Long">
+        select count(*) from t_link
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from t_link
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <!-- 添加友链，不用id -->
+    <insert id="addLink" parameterType="com.zjh.blog.domain.Link" >
+        insert into t_link (id, link_name, link_url, 
+            order_num)
+        values (null, #{linkName,jdbcType=VARCHAR}, #{linkUrl,jdbcType=VARCHAR},
+            #{orderNum,jdbcType=INTEGER})
+    </insert>
+
+    <!--根据id更新链接信息-->
+    <update id="updateLink" parameterType="com.zjh.blog.domain.Link" >
+        update t_link
+        <set>
+            <if test="linkName != null and linkName != ''">
+                link_name = #{linkName,jdbcType=VARCHAR},
+            </if>
+            <if test="linkUrl != null and linkUrl != ''">
+                link_url = #{linkUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNum != null and orderNum != ''">
+                order_num = #{orderNum,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteLink" parameterType="Integer">
+        delete from t_link where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <!-- Mybatis 缓存 -->
+    <cache flushInterval="60000"/>
+</mapper>

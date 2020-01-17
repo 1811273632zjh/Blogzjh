@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zjh.blog.dao.BlogMapper" >
+
+    <resultMap id="BlogResultMap" type="com.zjh.blog.domain.Blog" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="summary" property="summary" jdbcType="VARCHAR" />
+        <result column="releaseDate" property="releasedate" jdbcType="TIMESTAMP" />
+        <result column="clickHit" property="clickhit" jdbcType="INTEGER" />
+        <result column="replyHit" property="replyhit" jdbcType="INTEGER" />
+        <result column="content" property="content" jdbcType="LONGVARCHAR" />
+        <result column="keyWord" property="keyword" jdbcType="VARCHAR" />
+        <result column="type_id" property="typeId" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, title, summary, releaseDate, clickHit, replyHit, content, keyWord, type_id
+    </sql>
+
+    <!--根据id查询-->
+    <select id="getById" resultType="com.zjh.blog.domain.Blog" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from t_blog
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!--新增博客-->
+    <insert id="saveBlog" parameterType="com.zjh.blog.domain.Blog" >
+        insert into t_blog (id, title, summary,
+            releaseDate, clickHit, replyHit,
+            content, keyWord, type_id
+            )
+        values (NULL, #{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR},
+            now(), 0, 0,#{content,jdbcType=LONGVARCHAR}, #{keyword,jdbcType=VARCHAR},
+            #{blogType.id,jdbcType=INTEGER}
+            )
+    </insert>
+
+    <!--修改博客-->
+    <update id="updateBlog" parameterType="com.zjh.blog.domain.Blog" >
+        update t_blog
+        <set >
+            <if test="title != null" >
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null" >
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="clickhit != null" >
+                clickHit = #{clickhit,jdbcType=INTEGER},
+            </if>
+            <if test="replyhit != null" >
+                replyHit = #{replyhit,jdbcType=INTEGER},
+            </if>
+            <if test="content != null" >
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="keyword != null" >
+                keyWord = #{keyword,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null" >
+                type_id = #{blogType.id,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--删除-->
+    <delete id="deleteBlog" parameterType="java.lang.Integer" >
+        delete from t_blog
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <!--根据日期分租-->
+    <select id="countList" parameterType="java.lang.Integer">
+        SELECT
+        DATE_FORMAT(releaseDate,'%Y年%m月') AS releaseDateStr ,COUNT(*) AS
+		blogCount
+        FROM `t_blog` GROUP BY DATE_FORMAT(releaseDate,'%Y年%m月') ORDER BY DATE_FORMAT(releaseDate,'%Y年%m月') DESC
+
+    </select>
+
+    <!--分页查询博客并分页排序，按照点击量排序  desc -->
+    <select id="listBlog" parameterType="java.util.Map" resultType="com.zjh.blog.domain.Blog">
+        select
+        <include refid="Base_Column_List" />
+        from t_blog
+        <where>
+            <if test="title!=null and title!=''">
+                and title  like CONCAT('%',#{title},'%')
+            </if>
+            <if test="typeId!=null and typeId!=''">
+                and type_id=#{typeId}
+            </if>
+            <if test="releaseDateStr!=null and releaseDateStr!=''">
+                and DATE_FORMAT(releaseDate,'%Y年%m月')=#{releaseDateStr}
+            </if>
+        </where>
+        <if test="orderBy!=null and orderBy!=''">
+            ORDER BY ${orderBy}  DESC
+        </if>
+        <if test="start!=null and end!=null">
+            limit #{start},#{end}
+        </if>
+    </select>
+
+    <!--获取博客总数-->
+    <select id="getTotal" parameterType="Long" resultType="com.zjh.blog.domain.Blog">
+        select count(*) from t_blog
+        <where>
+            <if test="title != null and tital != ''">
+                and title like CONCAT('%', #{title}, '%')
+            </if>
+            <if test="typeId != null and typeId != ''">
+                and type_id = #{typeId}
+            </if>
+            <if test="releaseDateStr != null and releaseDateStr != ''">
+                and releaseDate = #{releaseDateStr}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
