@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zjh.blog.mapper.NoticeMapper" >
+    <resultMap id="BaseResultMap" type="com.zjh.blog.domain.Notice" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="notice_publisher" property="noticePublisher" jdbcType="VARCHAR" />
+        <result column="notice_date" property="noticeDate" jdbcType="TIMESTAMP" />
+        <result column="level" property="level" jdbcType="TINYINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, content, notice_publisher, DATE_FORMAT(notice_date,'%Y年%m月%d日 %H:%i:%S') AS notice_date, level
+    </sql>
+
+    <!--根据id查询-->
+    <select id="getNoticeById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from t_notice
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!--删除公告-->
+    <delete id="deleteNoticeById" parameterType="java.lang.Integer" >
+        delete from t_notice
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <!--新增公告-->
+    <insert id="insert" parameterType="com.zjh.blog.domain.Notice" >
+        insert into t_notice (id, content, notice_publisher, 
+            notice_date, level)
+        values (#{id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{noticePublisher,jdbcType=VARCHAR}, 
+            #{noticeDate,jdbcType=TIMESTAMP}, #{level,jdbcType=TINYINT})
+    </insert>
+
+    <!--保存公告-->
+    <insert id="saveNotice" parameterType="com.zjh.blog.domain.Notice" >
+        insert into t_notice
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            null,
+            <if test="content != null" >
+                content,
+            </if>
+            <if test="noticePublisher != null" >
+                notice_publisher,
+            </if>
+            now(),
+            <if test="level != null" >
+                level,
+            </if>
+        </trim>
+    </insert>
+
+    <!--修改公告-->
+    <update id="updateNotice" parameterType="com.zjh.blog.domain.Notice" >
+        update t_notice
+        <set >
+            <if test="content != null and content != ''" >
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="noticePublisher != null" >
+                notice_publisher = #{noticePublisher,jdbcType=VARCHAR},
+            </if>
+            <if test="noticeDate != null" >
+                notice_date = now(),
+            </if>
+            <if test="level != null" >
+                level = #{level,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--查询所有公告-->
+    <!--<select id="getAllNotices" resultMap="NoticeResultMap">-->
+		<!--SELECT-->
+		<!--<include refid="Base_Column_List" />-->
+		<!--FROM-->
+		<!--t_notice order by level desc-->
+	<!--</select>-->
+    <cache flushInterval="600000"></cache>
+</mapper>

@@ -8,6 +8,9 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @Auther：zjh
  * @Description：实现留言Service接口
@@ -38,5 +41,15 @@ public class MessageServiceImpl extends CommonMapper implements MessageService {
     @Override
     public Integer deleteMessage(Integer id) {
         return messageMapper.deleteMessage(id);
+    }
+
+    @Override
+    public Long getTotal(Map<String, Object> map) {
+        return messageMapper.getTotal(map);
+    }
+
+    @Override
+    public List<Message> getMessageData(Map<String, Object> map) {
+        return messageMapper.listByPage(map);
     }
 }

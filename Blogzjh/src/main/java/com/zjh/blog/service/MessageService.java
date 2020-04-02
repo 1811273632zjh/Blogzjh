@@ -2,6 +2,9 @@ package com.zjh.blog.service;
 
 import com.zjh.blog.domain.Message;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @Auther：zjh
  * @Description：
@@ -38,4 +41,12 @@ public interface MessageService {
       */
     Integer deleteMessage(Integer id);
 
+    /**
+     * 获取总记录数目
+     * @param map
+     * @return
+     */
+    Long getTotal(Map<String, Object> map);
+
+    List<Message> getMessageData(Map<String,Object> map);
 }

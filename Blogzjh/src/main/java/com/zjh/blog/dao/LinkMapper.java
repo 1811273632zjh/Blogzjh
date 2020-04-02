@@ -24,7 +24,7 @@ public interface LinkMapper {
     List<Link> listByPage(Integer start, Integer end);
 
     /**
-      * @Description: 获取
+      * @Description: 获取suoyou
       * @Param: 
       * @return: 
       */
