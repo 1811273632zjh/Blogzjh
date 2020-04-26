@@ -23,9 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(value = "/admin/blogger")
-public class BloggerController {
+public class BloggerAdminController {
 
-    private static  final Logger log = LoggerFactory.getLogger(BloggerController.class);
+    private static  final Logger log = LoggerFactory.getLogger(BloggerAdminController.class);
 
     @Autowired
     private BloggerService bloggerService;

@@ -1,6 +1,7 @@
 package com.zjh.blog.service;
 
 import com.zjh.blog.domain.Blog;
+import com.zjh.blog.domain.Comment;
 import com.zjh.blog.domain.PageBean;
 
 import java.util.List;

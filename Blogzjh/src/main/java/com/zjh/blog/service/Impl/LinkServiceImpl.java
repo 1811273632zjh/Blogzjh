@@ -1,11 +1,10 @@
 package com.zjh.blog.service.Impl;
 
-import com.zjh.blog.dao.CommonMapper;
+import com.zjh.blog.dao.CommentMapper;
 import com.zjh.blog.dao.LinkMapper;
 import com.zjh.blog.domain.Link;
 import com.zjh.blog.domain.PageBean;
 import com.zjh.blog.service.LinkService;
-import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +16,8 @@ import java.util.List;
  * @Data：2019/12/5 15:32
  * Version 1.0
  */
-@Service
-public class LinkServiceImpl extends CommonMapper implements LinkService {
+@Service("LinkService")
+public abstract class LinkServiceImpl implements LinkService {
 
     @Autowired
     private LinkMapper linkMapper;

@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "admin/message")
-public class MessageController {
+public class MessageAdminController {
 
-    private static final Logger log = LoggerFactory.getLogger(MessageController.class);
+    private static final Logger log = LoggerFactory.getLogger(MessageAdminController.class);
 
     @Autowired
     private MessageService messageService;

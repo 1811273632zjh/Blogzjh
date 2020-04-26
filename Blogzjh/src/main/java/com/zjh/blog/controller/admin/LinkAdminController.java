@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
 /**
  * @Auther：zjh
  * @Description：友链控制层
@@ -18,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = "/admin/link")
-public class LinkController {
+public class LinkAdminController {
 
-    private static final Logger log = LoggerFactory.getLogger(LinkController.class);
+    private static final Logger log = LoggerFactory.getLogger(LinkAdminController.class);
 
     @Autowired
     private LinkService linkService;

@@ -3,6 +3,7 @@ package com.zjh.blog.domain;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.SplittableRandom;
 
 /**
  * @author zjh
@@ -171,4 +172,5 @@ public class Blog {
             return 1;
         return 0;
     }
+
 }

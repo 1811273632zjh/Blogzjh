@@ -2,6 +2,7 @@ package com.zjh.blog.controller.admin;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zjh.blog.domain.BlogType;
+import com.zjh.blog.service.BlogService;
 import com.zjh.blog.service.BlogTypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,17 +23,20 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/admin/blogType")
-public class BlogTypeController {
+public class BlogTypeAdminController {
 
-    private static final Logger log = LoggerFactory.getLogger(BlogTypeController.class);
+    private static final Logger log = LoggerFactory.getLogger(BlogTypeAdminController.class);
 
     @Autowired
     private BlogTypeService blogTypeService;
+    @Autowired
+    private BlogService blogService;
 
     //根据id 查询博客类别   测试
     @RequestMapping("/selectById")
     public List<BlogType> selectById(Integer id, Model model){
-        return blogTypeService.selectById(id);
+        //return blogTypeService.selectById(id);
+        return null;
     }
 
     //新增 和 修改 博客类别
@@ -42,9 +46,9 @@ public class BlogTypeController {
         System.out.println("type_name:"+blogType.getTypeName()+"，order_num:"+blogType.getOrderNum());
         int resultTotal = 0;
         if(blogType.getId() == null){
-            resultTotal = blogTypeService.insert(blogType);
+            resultTotal = blogTypeService.addBlogType(blogType);
         }else {
-            resultTotal = blogTypeService.update(blogType);
+            resultTotal = blogTypeService.updateBlogType(blogType);
         }
         JSONObject result = new JSONObject();
         if(resultTotal > 0){
@@ -67,7 +71,7 @@ public class BlogTypeController {
         for (int i = 0; i < idsStr.length; i++){
             int id = Integer.parseInt(idsStr[i]);
             //判断博客
-            blogTypeService.delete(id);
+            blogTypeService.deleteBlogType(id);
         }
         // 返回一个json对象，带有一个boolean值，写入输出流response中
         result.put("success",0);

@@ -2,6 +2,30 @@
 
 git 往 GitHub 上传代码：
 	https://my.oschina.net/u/3732156/blog/1627119
+第一步：创建仓库
+第二步：确保存在.git文件夹
+	git init
+第三步：设置用户名和邮箱
+	git config --global user.name "1811273632zjh"
+	git config --global user.email "1811273632@qq.com"
+	查看用户名和邮箱
+	git config user.name
+	git config user.email
+第四步：配置ssh key
+	执行 ssh-keygen -t rsa -C "1811273632@qq.com"，生成.ssh文件
+	将C:\User\Admin\.ssh 中的id_rsa.pub 中的key 复制
+	GitHub 中Settings -->SSH and GPS keys -->New ssh key --> Title随便，key复制进去
+	Add SSH key
+	
+第五步：测试连接成功(git与GitHub之间的连接)
+	ssh -T git@github.com
+第六步：进入要上传的仓库，右键git bash ,添加远程地址
+	git remote add origin git@github.com:1811273632zjh/test.git
+第七步：命令行中输入
+	git add test.txt
+	git commit -m "第一次上传"
+	git push origin master
+
 
 更新步骤：
 第一步：查看当前的git仓库状态，可以使用git status

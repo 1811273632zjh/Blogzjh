@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/admin/picture")
-public class PictureController {
+public class PictureAdminController {
 
-    private static final Logger log = LoggerFactory.getLogger(PictureController.class);
+    private static final Logger log = LoggerFactory.getLogger(PictureAdminController.class);
 
     @Autowired
     private PictureService pictureService;

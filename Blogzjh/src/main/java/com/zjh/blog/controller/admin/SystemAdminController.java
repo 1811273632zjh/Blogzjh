@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/admin/system")
-public class SystemController {
+public class SystemAdminController {
 
-    private static final Logger log = LoggerFactory.getLogger(SystemController.class);
+    private static final Logger log = LoggerFactory.getLogger(SystemAdminController.class);
 
     @Autowired
     private BloggerService bloggerService;

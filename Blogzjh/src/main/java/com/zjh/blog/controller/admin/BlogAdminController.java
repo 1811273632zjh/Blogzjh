@@ -24,9 +24,9 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/admin/blog")
-public class BlogController {
+public class BlogAdminController {
 
-    private static final Logger log = LoggerFactory.getLogger(BlogController.class);
+    private static final Logger log = LoggerFactory.getLogger(BlogAdminController.class);
 
     @Autowired
     private BlogService blogService;

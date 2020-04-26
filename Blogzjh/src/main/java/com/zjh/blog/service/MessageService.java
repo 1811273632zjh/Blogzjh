@@ -1,6 +1,7 @@
 package com.zjh.blog.service;
 
 import com.zjh.blog.domain.Message;
+import com.zjh.blog.domain.PageBean;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,14 @@ import java.util.Map;
  * Version 1.0
  */
 public interface MessageService {
+
+    /**
+     * 分页查询留言信息
+     *
+     * @param pageBean
+     * @return
+     */
+    public PageBean<Message> listByPage(PageBean<Message> pageBean);
 
     /**
       * @Description: 根据id查询

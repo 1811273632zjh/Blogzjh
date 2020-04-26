@@ -1,7 +1,6 @@
 package com.zjh.blog.service.Impl;
 
 import com.zjh.blog.dao.BlogMapper;
-import com.zjh.blog.dao.CommonMapper;
 import com.zjh.blog.domain.Blog;
 import com.zjh.blog.domain.PageBean;
 import com.zjh.blog.service.BlogService;
@@ -14,16 +13,17 @@ import java.util.Map;
 
 /**
  * @Auther：zjh
- * @Data：2019/11/6 9:43
+ * @Description：博客Service实现类
+ * @Data：2020/4/15 20:05
  * Version 1.0
  */
 @Service
-public class BlogServiceImpl extends CommonMapper implements BlogService {
+public class BlogServiceImpl implements BlogService {
 
     @Autowired
     private BlogMapper blogMapper;
 
-   @Override
+    @Override
     public Blog getById(Integer id) {
         return blogMapper.getById(id);
     }
@@ -55,14 +55,14 @@ public class BlogServiceImpl extends CommonMapper implements BlogService {
 
     @Override
     public PageBean<Blog> listBlog(String title, PageBean<Blog> pageBean) {
-       Map<String,Object> map = new HashMap<String, Object>();
-       //设置查询条件
-        map.put("title",title);
-        //总记录放入pageBean
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 设置查询条件
+        map.put("title", title);
+        // 总记录放入pageBean
         pageBean.setTotal(blogMapper.getTotal(map));
-        map.put("start",pageBean.getStart());
-        map.put("end",pageBean.getEnd());
-        //把分页结果放入pageBean
+        map.put("start", pageBean.getStart());
+        map.put("end", pageBean.getEnd());
+        // 把分页结果放入pageBean
         pageBean.setResult(blogMapper.listBlog(map));
         return pageBean;
     }

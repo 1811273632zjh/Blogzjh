@@ -6,5 +6,5 @@ package com.zjh.blog.controller.admin;
  * @Data：2019/12/04 17:24
  * Version 1.0
  */
-public class CommentController {
+public class CommentAdminController {
 }

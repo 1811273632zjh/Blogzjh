@@ -1,6 +1,7 @@
 package com.zjh.blog.service;
 
 import com.zjh.blog.domain.BlogType;
+import com.zjh.blog.domain.PageBean;
 
 import java.util.List;
 
@@ -11,11 +12,37 @@ import java.util.List;
  */
 public interface BlogTypeService {
 
-    List<BlogType> selectById(Integer id);
+    /**
+     * @Description 分页查询
+     * @param pageBean
+     * @return
+     */
+    PageBean<BlogType> listByPage(PageBean<BlogType> pageBean);
 
-    Integer update(BlogType blogType);
+    /**
+     * @Description 添加博客类别
+     * @param blogType
+     * @return
+     */
+    public Integer addBlogType(BlogType blogType);
 
-    Integer insert(BlogType blogType);
+    /**
+     * @Description 更新博客类别
+     * @param blogType
+     * @return
+     */
+    public Integer updateBlogType(BlogType blogType);
 
-    Integer delete(Integer id);
+    /**
+     * @Description 删除博客类别
+     * @param id
+     * @return
+     */
+    public Integer deleteBlogType(Integer id);
+
+    /**
+     * @Description 获取博客类型列表
+     * @return
+     */
+    List<BlogType> getBlogTypeData();
 }

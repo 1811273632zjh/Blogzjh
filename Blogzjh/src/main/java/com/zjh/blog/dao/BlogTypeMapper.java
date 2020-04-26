@@ -2,6 +2,7 @@ package com.zjh.blog.dao;
 
 
 import com.zjh.blog.domain.BlogType;
+import org.apache.ibatis.annotations.Param;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -9,15 +10,49 @@ import java.util.List;
 @Resource
 public interface BlogTypeMapper {
 
-    int delete(Integer id);
+    /**
+     * 添加博客类别信息
+     * @param blogType
+     * @return
+     */
+    Integer addBlogType(BlogType blogType);
 
-    Integer insert(BlogType blogType);
+    /**
+     * 删除博客类别信息
+     * @param id
+     * @return
+     */
+    Integer deleteBlogType(Integer id);
 
-    Integer update(BlogType blogType);
+    /**
+     * 更新博客类别信息
+     * @param blogType
+     * @return
+     */
+    Integer updateBlogType(BlogType blogType);
 
-    List<BlogType> selectById(Integer id);
+    /**
+     * 根据id查询博客类别信息
+     * @param id
+     * @return
+     */
+    BlogType getById(Integer id);
 
-    int updateByPrimaryKeySelective(BlogType record);
+    /**
+     * 分页查询博客类别信息
+     * @param start
+     * @param end
+     * @return
+     */
+    List<BlogType> listByPage(@Param("start") Integer start, @Param("end") Integer end);
 
-    int updateByPrimaryKey(BlogType record);
+    /**
+     * 查询总记录数
+     * @return
+     */
+    Long getTotal();
+    /**
+     * 获取博客类别信息
+     */
+    List<BlogType> getBlogTypeData();
 }

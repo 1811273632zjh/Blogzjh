@@ -1,10 +1,10 @@
 package com.zjh.blog.service.Impl;
 
-import com.zjh.blog.dao.CommonMapper;
+import com.zjh.blog.dao.CommentMapper;
 import com.zjh.blog.dao.MessageMapper;
 import com.zjh.blog.domain.Message;
+import com.zjh.blog.domain.PageBean;
 import com.zjh.blog.service.MessageService;
-import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +18,19 @@ import java.util.Map;
  * Version 1.0
  */
 @Service
-public class MessageServiceImpl extends CommonMapper implements MessageService {
+public class MessageServiceImpl implements MessageService {
 
     @Autowired
     private MessageMapper messageMapper;
+
+    @Override
+    public PageBean<Message> listByPage(PageBean<Message> pageBean) {
+        pageBean.getMap().put("start", pageBean.getStart());
+        pageBean.getMap().put("end", pageBean.getEnd());
+        pageBean.setResult(messageMapper.listByPage(pageBean.getMap()));
+        pageBean.setTotal(messageMapper.getTotal(pageBean.getMap()));
+        return pageBean;
+    }
 
     @Override
     public Message getById(Integer id) {
